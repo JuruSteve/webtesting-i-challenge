@@ -65,5 +65,21 @@ describe("success(item)", () => {
         expect(enhancer.fail(actual)).toEqual(expectedItem);
       });
     });
+    describe("get(item)", () => {
+      describe("modifies name prop on item{}", () => {
+        it("keeps the name untouched if enhancement = 0", () => {
+          const actual = { name: "item5", durability: 0, enhancement: 0 };
+          const expected = { name: "item5", durability: 0, enhancement: 0 };
+          expect(enhancer.get(actual)).toEqual(expected);
+        });
+        it("Change the name to include enhancement level and to be preceded by _ + _, if enhancement is > 0", () => {
+          const actual = { name: "item5", durability: 0, enhancement: 10 };
+          // const expected = { name: "item5", durability: 0, enhancement: 0 };
+          const expected = "[+10] item5";
+          const call = enhancer.get(actual);
+          expect(call.name).toEqual(expected);
+        });
+      });
+    });
   });
 });
